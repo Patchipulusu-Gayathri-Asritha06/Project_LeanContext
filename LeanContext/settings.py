@@ -25,10 +25,10 @@ load_dotenv()
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-)a+gkomyswh%5$tk!jc&uvn-6yct=a0hqco2#@4+m@nu)7!b13'
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = []
 
@@ -147,8 +147,8 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-EMAIL_HOST_USER = "blogprojectdeveloper@gmail.com"
-EMAIL_HOST_PASSWORD ="qyykjvmidsoaftno"
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
@@ -158,3 +158,4 @@ TIME_ZONE = "Asia/Kolkata"
 USE_TZ = True
 
 USE_L10N = True
+
