@@ -1,0 +1,153 @@
+{% extends "users/base.html" %}
+{% load tz %}
+
+{% block styles %}
+<style>
+    .history-wrapper {
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 0 20px;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .page-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 30px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #f1f3f5;
+    }
+
+    .session-card {
+        background: #ffffff;
+        border: 1px solid #e9ecef;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        text-decoration: none !important;
+        display: block;
+        padding: 20px;
+        margin-bottom: 15px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .session-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        border-color: #0d6efd;
+    }
+
+    .session-icon {
+        width: 45px;
+        height: 45px;
+        background-color: #e7f1ff;
+        color: #0d6efd;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        margin-right: 15px;
+    }
+
+    .session-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #212529;
+        margin-bottom: 4px;
+    }
+
+    .session-meta {
+        font-size: 0.85rem;
+        color: #6c757d;
+        display: flex;
+        align-items: center;
+    }
+
+    .view-link {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #0d6efd;
+        display: flex;
+        align-items: center;
+    }
+
+    /* Badge for new sessions or just decorative */
+    .status-dot {
+        height: 8px;
+        width: 8px;
+        background-color: #ced4da;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 8px;
+    }
+</style>
+{% endblock styles %}
+
+{% block content %}
+<div class="history-wrapper">
+    <div class="page-header">
+        <div>
+            <h3 class="fw-bold text-dark m-0">Your Chat Sessions</h3>
+            <p class="text-muted small m-0">Access and review your previous document analyses</p>
+        </div>
+        <div class="text-primary fw-bold small">
+            Total: {{ sessions|length }}
+        </div>
+        <form method="POST" action="{% url 'delete-all-sessions' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-sm btn-outline-danger"
+                onclick="return confirm('Delete All Chat History permanently?')">
+                <i class="bi bi-trash"></i> Delete All
+            </button>
+        </form>
+    </div>
+
+    <div class="session-list">
+        {% for session in sessions %}
+        <a href="{% url 'session-detail' session.id %}" class="session-card">
+            <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center">
+                    <div class="session-icon">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="session-title">{{ session.title }}</div>
+                        <div class="session-meta">
+                            <span class="status-dot"></span>
+                            {{ session.created_at|localtime|date:"d M Y" }} •
+                            {{ session.created_at|localtime|date:"h:i A" }}
+                        </div>
+                    </div>
+                </div>
+                <div class="view-link">
+                    View
+                    <svg class="ms-1" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"
+                        viewBox="0 0 24 24">
+                        <path d="M9 18l6-6-6-6"></path>
+                    </svg>
+                </div>
+            </div>
+        </a>
+        {% empty %}
+        <div class="text-center py-5">
+            <div class="mb-3 opacity-25">
+                <svg width="64" height="64" fill="currentColor" viewBox="0 0 16 16">
+                    <path
+                        d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
+                </svg>
+            </div>
+            <h5 class="text-muted">No sessions found</h5>
+            <p class="text-muted small">Upload a PDF to start your first chat session!</p>
+            <a href="{% url 'rag-upload' %}" class="btn btn-primary mt-2">New Upload</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

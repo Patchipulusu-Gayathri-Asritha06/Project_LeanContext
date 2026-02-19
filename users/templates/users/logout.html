@@ -1,0 +1,22 @@
+{% extends "users/base.html" %}
+
+{% block styles %}
+<style>
+    .content-section {
+        margin: 1rem auto;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+    }
+</style>
+{% endblock styles %}
+
+{% block content %}
+<div class="content-section">
+    <h2>You have been Logged out!</h2>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            <a href="{% url 'login' %}">Log In Again</a>
+        </small>
+    </div>
+</div>
+{% endblock content %}

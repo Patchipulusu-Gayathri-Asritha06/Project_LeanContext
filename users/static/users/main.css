@@ -1,0 +1,141 @@
+body {
+    background: #fafafa;
+    color: #333333;
+    margin-top: 5rem;
+}
+
+svg {
+    fill: #10B981;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #444444;
+}
+
+ul {
+    margin: 0;
+}
+
+body {
+    background-color: #F0FDF4;
+}
+
+.navbar {
+    background: linear-gradient(90deg, #10B981, #3B82F6);
+    margin-bottom: 1rem;
+}
+
+.site-header .navbar-nav .nav-link {
+    color: #F0FDF4;
+    font-size: large;
+}
+
+.site-header .navbar-nav .nav-link:hover {
+    color: #FFFFFF;
+    transform: scale(1.1);
+}
+
+.site-header .navbar-nav .nav-link.active {
+    color: #FFFFFF;
+    font-weight: 600;
+    font-size: larger;
+}
+
+.content-section {
+    background: #ffffff;
+    padding: 10px 20px;
+    border: 1px solid #dddddd;
+    border-radius: 3px;
+    margin-bottom: 20px;
+}
+
+.article-title {
+    color: #444444;
+}
+
+a.article-title:hover {
+    color: #428bca;
+    text-decoration: none;
+}
+
+.article-content {
+    white-space: pre-line;
+}
+
+.article-img {
+    height: 65px;
+    width: 65px;
+    margin-right: 16px;
+}
+
+.article-metadata {
+    padding-bottom: 1px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid #e3e3e3
+}
+
+.article-metadata a:hover {
+    color: #333;
+    text-decoration: none;
+}
+
+.article-svg {
+    width: 25px;
+    height: 25px;
+    vertical-align: middle;
+}
+
+img.account-img {
+    height: 125px;
+    width: 125px;
+    margin-right: 20px;
+    margin-bottom: 16px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+img.account-img:hover {
+    transform: scale(1.01);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.account-heading {
+    font-size: 2.5rem;
+}
+
+.profile-circle {
+    width: 40px;
+    height: 40px;
+    background-color: orange;
+    /* Your brand color */
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 18px;
+    text-transform: uppercase;
+    transition: 0.3s ease;
+}
+
+.profile-circle:hover {
+    background-color: #000;
+    transform: scale(1.05);
+}
+
+a.text-decoration-none {
+    text-decoration: none;
+}
+
+.profile-img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+}

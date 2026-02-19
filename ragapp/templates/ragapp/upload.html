@@ -1,0 +1,140 @@
+{% extends "users/base.html" %}
+
+{% block styles %}
+<style>
+    .upload-wrapper {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .upload-card {
+        width: 100%;
+        max-width: 550px;
+        background: #ffffff;
+        padding: 2.5rem;
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.07);
+        border: 1px solid #f1f3f5;
+        text-align: center;
+    }
+
+    /* Modern Dropzone Area */
+    .file-drop-area {
+        position: relative;
+        padding: 3rem 2rem;
+        border: 2px dashed #cbd5e0;
+        border-radius: 15px;
+        background-color: #f8fafc;
+        transition: all 0.2s ease-in-out;
+        cursor: pointer;
+        margin-bottom: 1.5rem;
+    }
+
+    .file-drop-area:hover {
+        border-color: #4299e1;
+        background-color: #ebf8ff;
+    }
+
+    .file-input {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    /* Processing State - Hidden by Default */
+    #processing-area {
+        display: none;
+        /* Controlled by JS */
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem 0;
+    }
+
+    .spinner-grow-lg {
+        width: 3.5rem;
+        height: 3.5rem;
+    }
+
+    .upload-icon-svg {
+        width: 50px;
+        height: 50px;
+        fill: #4299e1;
+        margin-bottom: 1rem;
+    }
+</style>
+{% endblock styles %}
+
+{% block content %}
+<div class="upload-wrapper">
+    <div class="upload-card">
+
+        <div id="form-container">
+            <h3 class="fw-bold mb-2">Upload Document</h3>
+            <p class="text-muted mb-4 small">Analyze your PDF with AI in seconds</p>
+
+            <form method="POST" enctype="multipart/form-data" onsubmit="showProcessing()">
+                {% csrf_token %}
+
+                <div class="file-drop-area">
+                    <svg class="upload-icon-svg" viewBox="0 0 24 24">
+                        <path
+                            d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
+                    </svg>
+
+                    <div class="fw-bold text-dark mb-1" id="file-name-text">Choose a PDF file</div>
+                    <div class="text-muted small">or drag and drop here</div>
+
+                    <input class="file-input" type="file" name="pdf" id="pdfInput" accept="application/pdf" required
+                        onchange="handleFileSelect()">
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 py-3 fw-bold shadow-sm">
+                    Upload and Analyze
+                </button>
+            </form>
+        </div>
+
+        <div id="processing-area">
+            <div class="spinner-grow text-primary spinner-grow-lg mb-3" role="status"></div>
+            <h4 class="fw-bold text-dark">Processing...</h4>
+            <p class="text-muted">We are reading your document. Please don't refresh.</p>
+        </div>
+
+        {% if message %}
+        <div class="alert alert-success mt-4 small">
+            <strong>Success!</strong> {{ message }}
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    // Updates the text inside the box when a file is picked
+    function handleFileSelect() {
+        const input = document.getElementById('pdfInput');
+        const textLabel = document.getElementById('file-name-text');
+        if (input.files.length > 0) {
+            textLabel.innerText = "Selected: " + input.files[0].name;
+            textLabel.classList.remove('text-dark');
+            textLabel.classList.add('text-primary');
+        }
+    }
+
+    // Swaps the form for the spinner
+    function showProcessing() {
+        const formContent = document.getElementById("form-container");
+        const processingArea = document.getElementById("processing-area");
+
+        // Hide form, Show spinner
+        formContent.style.display = "none";
+        processingArea.style.display = "flex";
+    }
+</script>
+{% endblock content %}

@@ -1,0 +1,33 @@
+# Virtual environment
+myEnv/
+venv/
+env/
+
+# Environment variables
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Database
+db.sqlite3
+
+# Media uploads
+media/
+
+# Vector store & RL state
+ragapp/chroma/
+ragapp/rl_state/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# Migrations cache (optional but recommended)
+*/migrations/__pycache__/
